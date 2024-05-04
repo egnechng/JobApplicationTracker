@@ -70,7 +70,13 @@ public class JobTracker {
 
                 case 4: {
                     // Import Job Applications by csv file
-                    System.out.println("Case 4");
+                    String filename = importJobWindow(scanner);
+                    boolean importResult = dm.importFromCSV(filename);
+                    if (importResult){
+                        System.out.println("Successfully imported job applications from .csv file!");
+                    }else{
+                        System.out.println("Job importing failed, look for error messages above, fix the CSV file, and retry please!");
+                    }
 
                 }
                 break;
@@ -145,6 +151,19 @@ public class JobTracker {
         // create Job object
         return new Job(company, role, salary, location, date, status, link);
     }
+
+    public static String importJobWindow(Scanner scanner) {
+        clear();
+        System.out.println("Import Jobs from .csv File: (Make sure you input file name correctly)");
+        System.out.println("===========================================================================");
+        System.out.print("Name of .csv file: ");
+        String filename = scanner.nextLine();
+
+        
+        clear();
+        return filename;
+    }
+
     // used to clear the terminal
     public static void clear() {
         System.out.print("\033[H\033[2J");

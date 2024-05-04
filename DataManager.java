@@ -25,8 +25,9 @@ public class DataManager {
         return instance;
     }
     
-    public void importFromCSV(String filename){
+    public boolean importFromCSV(String filename){
         try{
+            ArrayList<Job> temp = new ArrayList<Job>();
             FileReader fileReader = new FileReader(filename);
             BufferedReader bufferedReader = new BufferedReader(fileReader);
             bufferedReader.readLine(); // Skip header line
@@ -47,15 +48,19 @@ public class DataManager {
                 Date parsedApplicationDate = dateFormat.parse(field[4]);
                 Job newJob = new Job(field[0], field[1],parsedSalary, field[3],parsedApplicationDate, field[5], field[6]);
                 // TODO: might need to remove add/remove fields. Also notice the format for date is a long of milliseconds
-                jobs.add(newJob);
+                temp.add(newJob);
             }
             bufferedReader.close();
+            jobs.addAll(temp);
+            return true;
         }
         catch (IOException e){
-            System.out.println(e);
+            System.out.println("Invalid date format within . Please enter the date in MM/DD/YYYY format.");
+            return false;
         }
         catch (ParseException e) {
-            System.out.println("Invalid date format. Please enter the date in MM/DD/YYYY format.");
+            System.out.println("Invalid date format within imported CSV. Please enter the date in MM/DD/YYYY format.");
+            return false;
         }
     }
 
