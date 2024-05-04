@@ -1,8 +1,4 @@
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.text.SimpleDateFormat;
@@ -13,7 +9,7 @@ public class JobTracker {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        DataManager dm = new DataManager();
+        DataManager dm = DataManager.getInstance();
 
         System.out.println("Welcome to the Job Application Tracker!");
         /*
@@ -48,14 +44,11 @@ public class JobTracker {
             }
             switch(Integer.parseInt(optionChosen)) {
                 case 1: {
+                    // Test job
+                    dm.addJob(new Job("OpenAI", "Developer", 120000, "San Francisco", new Date(), "Applied", "http://openai.com/jobs/dev"));
                     // Display all my applications
-
-                    // Contact c = new Contact(name, email, phone, notes);
-
-                    //  contactList.add(c);
-
-                    System.out.println("Saved sucessfully....Press Enter to go back to the Main Window");
-                    scanner.nextLine();
+                    ArrayList<Job> jobsList = dm.getJobs();
+                    printJobsTable(jobsList);
                 }
                 break;
 
@@ -68,9 +61,9 @@ public class JobTracker {
 
                 case 3: {
                     // Add new Job Application
-                    Job j = addJob(scanner);
+                    Job j = addJobWindow(scanner);
                     // call dm to save job
-                    dm.saveJob(j);
+                    dm.addJob(j);
 
                 }
                 break;
@@ -94,7 +87,26 @@ public class JobTracker {
 
     }
 
-    public static Job addJob(Scanner scanner) {
+    public static void printJobsTable(ArrayList<Job> jobsList) {
+        System.out.println("-------------------------------------------------------------------------------------------------------------------");
+        System.out.printf("%-20s %-20s %-10s %-20s %-15s %-15s %-30s\n", "Company", "Role", "Salary", "Location", "Date Applied", "Status", "Link");
+        System.out.println("-------------------------------------------------------------------------------------------------------------------");
+
+        for (Job job : jobsList) {
+            System.out.printf("%-20s %-20s $%-9.2f %-20s %-15s %-15s %-30s\n",
+                    job.getCompany(),
+                    job.getRole(),
+                    job.getSalary(),
+                    job.getLocation(),
+                    job.getDateApplied(),
+                    job.getStatus(),
+                    job.getLinkToPosting());
+        }
+
+        System.out.println("-------------------------------------------------------------------------------------------------------------------");
+    }
+
+    public static Job addJobWindow(Scanner scanner) {
         clear();
         System.out.println("Add New Job Application: (Enter the following information)");
         System.out.println("===========================================================================");
@@ -131,9 +143,7 @@ public class JobTracker {
         clear();
 
         // create Job object
-        Job j = new Job(company, role, salary, location, date, status, link);
-        System.out.println("Job Application Saved!");
-        return j;
+        return new Job(company, role, salary, location, date, status, link);
     }
     // used to clear the terminal
     public static void clear() {
