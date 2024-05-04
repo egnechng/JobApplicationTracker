@@ -1,9 +1,10 @@
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Represents a job application with details about the job and the application status.
  */
-public class Job {
+public class Job implements Serializable{
     private String company;
     private String role;
     private double salary;
