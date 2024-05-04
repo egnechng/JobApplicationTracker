@@ -145,6 +145,8 @@ public class Job implements Serializable{
         this.linkToPosting = linkToPosting;
     }
 
-
-
+    @Override
+    public String toString() {
+        return String.format("(%s,%s,%f,%s,%s,%s)", company, role,salary,location,dateApplied.toString(),status,linkToPosting);
+    }
 }

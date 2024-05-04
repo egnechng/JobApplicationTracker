@@ -3,6 +3,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.stream.Collectors;
@@ -22,31 +24,38 @@ public class DataManager {
         }
         return instance;
     }
-    public static void main(String[] args) {
-        DataManager dm = new DataManager();
-        dm.importFromCSV("mock_job_applications_import.csv");
-        System.out.println(dm.jobs);
-    }
+    
     public void importFromCSV(String filename){
         try{
             FileReader fileReader = new FileReader(filename);
             BufferedReader bufferedReader = new BufferedReader(fileReader);
             bufferedReader.readLine(); // Skip header line
             String line;
+            
+            SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+            dateFormat.setLenient(false);
+
+
             while ((line = bufferedReader.readLine()) != null){
                 String[] field = line.split(",");
-                Double parsedSalary  =Double.parseDouble(field[2]);
-                Date parsedApplicationDate = new Date(Long.parseLong(field[4]));
+                Double parsedSalary;
+                if (field[2] == ""){
+                    parsedSalary = 0.0;
+                }else{
+                    parsedSalary  = Double.parseDouble(field[2]);
+                }
+                Date parsedApplicationDate = dateFormat.parse(field[4]);
                 Job newJob = new Job(field[0], field[1],parsedSalary, field[3],parsedApplicationDate, field[5], field[6]);
                 // TODO: might need to remove add/remove fields. Also notice the format for date is a long of milliseconds
                 jobs.add(newJob);
             }
             bufferedReader.close();
-        } catch (FileNotFoundException e){
-            System.out.println(e);
         }
         catch (IOException e){
             System.out.println(e);
+        }
+        catch (ParseException e) {
+            System.out.println("Invalid date format. Please enter the date in MM/DD/YYYY format.");
         }
     }
 
