@@ -11,6 +11,10 @@ public class JobTracker {
         Scanner scanner = new Scanner(System.in);
         DataManager dm = DataManager.getInstance();
 
+        //test job
+        dm.addJob(new Job("OpenAI", "Developer", 120000, "San Francisco", new Date(), "Applied", "http://openai.com/jobs/dev"));
+        dm.addJob(new Job("OpenAI", "Manager", 130000, "New York", new Date(), "Interview", "http://openai.com/jobs/mgr"));
+
         System.out.println("Welcome to the Job Application Tracker!");
         /*
         try{
@@ -44,11 +48,13 @@ public class JobTracker {
             }
             switch(Integer.parseInt(optionChosen)) {
                 case 1: {
-                    // Test job
-                    dm.addJob(new Job("OpenAI", "Developer", 120000, "San Francisco", new Date(), "Applied", "http://openai.com/jobs/dev"));
                     // Display all my applications
                     ArrayList<Job> jobsList = dm.getJobs();
                     printJobsTable(jobsList);
+
+                    // Filter by Status
+
+
                 }
                 break;
 
@@ -64,6 +70,7 @@ public class JobTracker {
                     Job j = addJobWindow(scanner);
                     // call dm to save job
                     dm.addJob(j);
+                    System.out.println("Job Application Saved!");
 
                 }
                 break;
@@ -94,22 +101,29 @@ public class JobTracker {
     }
 
     public static void printJobsTable(ArrayList<Job> jobsList) {
+        clear();
+        System.out.println("My Job Applications");
         System.out.println("-------------------------------------------------------------------------------------------------------------------");
-        System.out.printf("%-20s %-20s %-10s %-20s %-15s %-15s %-30s\n", "Company", "Role", "Salary", "Location", "Date Applied", "Status", "Link");
+        System.out.printf("%-20s %-20s %-15s %-20s %-15s %-15s %-30s\n", "Company", "Role", "Salary", "Location", "Date Applied", "Status", "Link");
         System.out.println("-------------------------------------------------------------------------------------------------------------------");
 
         for (Job job : jobsList) {
-            System.out.printf("%-20s %-20s $%-9.2f %-20s %-15s %-15s %-30s\n",
+            System.out.printf("%-20s %-20s $%-14.2f %-20s %-15s %-15s %-30s\n",
                     job.getCompany(),
                     job.getRole(),
                     job.getSalary(),
                     job.getLocation(),
-                    job.getDateApplied(),
+                    job.getDateAppliedFormatted(),
                     job.getStatus(),
                     job.getLinkToPosting());
         }
 
         System.out.println("-------------------------------------------------------------------------------------------------------------------");
+
+    }
+
+    public static String filterByStatus() {
+        return null;
     }
 
     public static Job addJobWindow(Scanner scanner) {
@@ -130,13 +144,12 @@ public class JobTracker {
         while (!correctFormat) {
             System.out.print("Date Applied (MM/DD/YYYY): ");
             String dateString = scanner.nextLine();
-            // TODO: parse date into date object
             SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
             dateFormat.setLenient(false);
 
             try {
                 date = dateFormat.parse(dateString);
-                System.out.println("Parsed Date: " + date);
+                // System.out.println("Parsed Date: " + date);
                 correctFormat = true;
             } catch (ParseException e) {
                 System.out.println("Invalid date format. Please enter the date in MM/DD/YYYY format.");

@@ -1,10 +1,14 @@
 import java.io.Serializable;
 import java.util.Date;
+import java.text.SimpleDateFormat;
 
 /**
  * Represents a job application with details about the job and the application status.
  */
 public class Job implements Serializable{
+    static int lastIdUsed = 0;
+    private int id;
+
     private String company;
     private String role;
     private double salary;
@@ -24,6 +28,7 @@ public class Job implements Serializable{
      * @param linkToPosting the URL link to the job posting
      */
     public Job(String company, String role, double salary, String location, Date dateApplied, String status, String linkToPosting) {
+
         this.company = company;
         this.role = role;
         this.salary = salary;
@@ -31,6 +36,21 @@ public class Job implements Serializable{
         this.dateApplied = dateApplied;
         this.status = status;
         this.linkToPosting = linkToPosting;
+
+        this.id = ++lastIdUsed;
+    }
+
+    public void setLastId(int value) {
+        lastIdUsed = value;
+    }
+
+    public int getLastId() {
+        return lastIdUsed;
+    }
+
+
+    public int getId() {
+        return id;
     }
 
     /**
@@ -103,6 +123,11 @@ public class Job implements Serializable{
      */
     public Date getDateApplied() {
         return dateApplied;
+    }
+
+    public String getDateAppliedFormatted() {
+        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+        return formatter.format(dateApplied);
     }
 
     /**

@@ -66,7 +66,6 @@ public class DataManager {
 
     public void addJob(Job j) {
         jobs.add(j);
-        System.out.println("Job Application Saved!");
     }
 
     public ArrayList<Job> getJobs() {
