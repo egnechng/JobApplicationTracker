@@ -4,7 +4,7 @@ In today's fluctuating job market, effectively organizing and tracking your job 
 This application is designed to help users manage their job applications simply and efficiently.
 
 ## Usecase Diagram
-
+![image](diagrams/usecase_diagram.png)
 ## Sequence Diagram
 
 ## Class Diagram
