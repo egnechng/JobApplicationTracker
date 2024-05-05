@@ -29,11 +29,33 @@ public class WindowManager {
         System.out.println("(3) Add new Job Application");
         System.out.println("(4) Import Job Applications (from csv file)");
         System.out.println("(5) Quit");
-        System.out.println("Enter your choice:");
+        System.out.print("Enter your choice: ");
         return scanner.nextLine();
     }
 
-    public String printJobsTable(ArrayList<Job> jobsList) {
+    public String showBrowseJobsWindow(ArrayList<Job> jobsList) {
+        clear();
+        printJobsTable(jobsList); // First list all of the jobs
+        // Give options coming out of Browse
+        System.out.println("Choose one of the following options: ");
+        System.out.println("(1) Filter Applications by Status");
+        System.out.println("(2) Edit Job Application");
+        System.out.println("(3) Return to Main Window");
+        System.out.print("Enter your choice: ");
+        return scanner.nextLine();
+    }
+
+    public String showFilterJobsWindow() {
+        clear();
+        System.out.println("Choose which status to filter by: ");
+        System.out.println("(1) Applied");
+        System.out.println("(2) Screened");
+        System.out.println("(3) Interviewed");
+        System.out.print("Enter your choice: ");
+        return scanner.nextLine();
+    }
+
+    public void printJobsTable(ArrayList<Job> jobsList) {
         clear();
         System.out.println("My Job Applications");
         System.out.println("----------------------------------------------------------------------------------------------------------------------------------");
@@ -54,17 +76,9 @@ public class WindowManager {
 
         System.out.println("----------------------------------------------------------------------------------------------------------------------------------");
 
-        // Options coming out of Browse
-        System.out.println("Choose on of the following options: ");
-        System.out.println("(1) Filter Applications by Company, Role or Location");
-        System.out.println("(2) Edit Job Application");
-        System.out.println("(3) Return to Main Window");
-        System.out.println("Enter your choice:");
-        return scanner.nextLine();
     }
 
-
-    public Job addJobWindow() {
+    public Job showAddJobWindow() {
         clear();
         System.out.println("Add New Job Application: (Enter the following information)");
         System.out.println("===========================================================================");
@@ -103,7 +117,7 @@ public class WindowManager {
         return new Job(company, role, salary, location, date, status, link);
     }
 
-    public String importJobWindow() {
+    public String showImportJobWindow() {
         clear();
         System.out.println("Import Jobs from .csv File: (Make sure you input file name correctly)");
         System.out.println("===========================================================================");

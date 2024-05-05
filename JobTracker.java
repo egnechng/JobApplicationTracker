@@ -23,7 +23,7 @@ public class JobTracker {
     public void runApp(DataManager dm, WindowManager wm) {
         //test job
         dm.addJob(new Job("OpenAI", "Developer", 120000, "San Francisco", new Date(), "Applied", "http://openai.com/jobs/dev"));
-        dm.addJob(new Job("OpenAI", "Manager", 130000, "New York", new Date(), "Interview", "http://openai.com/jobs/mgr"));
+        dm.addJob(new Job("OpenAI", "Manager", 130000, "New York", new Date(), "Interviewed", "http://openai.com/jobs/mgr"));
 
         System.out.println("Welcome to the Job Application Tracker!");
         /*
@@ -42,9 +42,8 @@ public class JobTracker {
 
             String optionChosen = wm.showMainOptionsWindow();
 
-            try{
-                Integer.parseInt(optionChosen);
-            }catch (NumberFormatException exception){
+            if (!validateOption(optionChosen , 5)) {
+                wm.clear();
                 System.out.println("Not a valid option!");
                 continue;
             }
@@ -52,9 +51,38 @@ public class JobTracker {
                 case 1: {
                     // Display all my applications
                     ArrayList<Job> jobsList = dm.getJobs();
-                    wm.printJobsTable(jobsList);
+                    String opt = wm.showBrowseJobsWindow(jobsList);
 
-                    // Filter by Status
+                    if (!validateOption(optionChosen, 3)) {
+                        wm.clear();
+                        System.out.println("Not a valid option!");
+                        continue;
+                    }
+                    switch(Integer.parseInt(opt)) {
+                        case 1: {
+                            // Filter by Status
+                            opt = wm.showFilterJobsWindow();
+                            if (!validateOption(optionChosen, 3)) {
+                                wm.clear();
+                                System.out.println("Not a valid option!");
+                                continue;
+                            }
+                            ArrayList<Job> filteredJobList = dm.filterJobsByStatus(Integer.parseInt(opt));
+                            // print filtered list
+                            wm.printJobsTable(filteredJobList);
+
+                        } break;
+
+                        case 2: {
+
+                        }
+
+                        default : {
+
+                        }
+                    }
+
+
 
 
                 }
@@ -69,7 +97,7 @@ public class JobTracker {
 
                 case 3: {
                     // Add new Job Application
-                    Job j = wm.addJobWindow();
+                    Job j = wm.showAddJobWindow();
                     // call dm to save job
                     dm.addJob(j);
                     System.out.println("Job Application Saved!");
@@ -79,7 +107,7 @@ public class JobTracker {
 
                 case 4: {
                     // Import Job Applications by csv file
-                    String filename = wm.importJobWindow();
+                    String filename = wm.showImportJobWindow();
                     boolean importResult = dm.importFromCSV(filename);
                     if (importResult){
                         System.out.println("Successfully imported job applications from .csv file!");
@@ -100,6 +128,17 @@ public class JobTracker {
         }
 
     }
+
+    public boolean validateOption(String opt, int range) {
+        try{
+            Integer.parseInt(opt);
+        }catch (NumberFormatException exception){
+            return false;
+        }
+        int parsed = Integer.parseInt(opt);
+        return parsed > 0 && parsed <= range;
+    }
+
 
     public static void main(String[] args) {
 

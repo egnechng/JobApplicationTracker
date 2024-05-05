@@ -91,6 +91,33 @@ public class DataManager {
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
+    public ArrayList<Job> filterJobsByStatus(int option) {
+        String status = "";
+        ArrayList<Job> filteredJobs = new ArrayList<>();
+        switch(option) {
+            case 1 : {
+                // by Applied
+                status = "Applied";
+            } break;
+            case 2 : {
+                // by Screened
+                status = "Screened";
+            } break;
+            case 3 : {
+                status = "Interviewed";
+            } break;
+
+        }
+
+        for (Job j : jobs) {
+            if (j.getStatus().equalsIgnoreCase(status)) {
+                filteredJobs.add(j);
+            }
+        }
+
+        return filteredJobs;
+    }
+
     public static void saveJob(Job j) {
         // TODO: Save this into the bin file.
         System.out.println("Job Application Saved!");
