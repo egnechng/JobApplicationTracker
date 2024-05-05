@@ -1,7 +1,4 @@
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -16,6 +13,18 @@ public class DataManager {
 
     private DataManager() {
         jobs = new ArrayList<>();
+
+        // if there is a save file of jobs, load it into the jobs
+        try {
+            FileInputStream fileStream = new FileInputStream("data.bin");
+            ObjectInputStream deserializer = new ObjectInputStream(fileStream);
+            jobs = (ArrayList<Job>) deserializer.readObject();
+            int lastId = (int) deserializer.readObject();
+            Job.setLastId(lastId);
+            deserializer.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static DataManager getInstance() {
@@ -174,9 +183,17 @@ public class DataManager {
         return filteredJobs;
     }
 
-    public static void saveJob(Job j) {
-        // TODO: Save this into the bin file.
-        System.out.println("Job Application Saved!");
+    public void serializeAndSave() {
+        // System.out.println("Job Application Saved!");
+        try{
+            FileOutputStream fileStream = new FileOutputStream("data.bin");
+            ObjectOutputStream serializer = new ObjectOutputStream(fileStream);
+            serializer.writeObject(jobs);
+            serializer.writeObject(Job.getLastId());
+            serializer.close();
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }

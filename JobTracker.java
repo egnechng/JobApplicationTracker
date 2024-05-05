@@ -17,22 +17,9 @@ public class JobTracker {
     }
 
     public void runApp(DataManager dm, WindowManager wm) {
-        //test job
-        dm.addJob(new Job("OpenAI", "Developer", 120000, "San Francisco", new Date(), "Applied", "http://openai.com/jobs/dev"));
-        dm.addJob(new Job("OpenAI", "Manager", 130000, "New York", new Date(), "Interviewed", "http://openai.com/jobs/mgr"));
         wm.clear();
         System.out.println("Welcome to the Job Application Tracker!");
-        /*
-        try{
-            FileInputStream fileStream = new FileInputStream("data.bin");
-            ObjectInputStream deserializer = new ObjectInputStream(fileStream);
-            contactList = (ArrayList<Contact>) deserializer.readObject();
-            int contactsCreated = (int) deserializer.readObject();
-            Contact.setContactsCreatedAmount(contactsCreated);
-            deserializer.close();
-        }catch (Exception e) {
-            e.printStackTrace();
-        }*/
+
         forever:
         while (true) {
 
@@ -185,9 +172,9 @@ public class JobTracker {
                     System.out.println("Quitting...");
                     break forever;
                 }
-
-
             }
+            // Serialize and Save Jobs list
+            dm.serializeAndSave();
         }
 
     }
