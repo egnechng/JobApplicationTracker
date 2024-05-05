@@ -3,21 +3,6 @@
 In today's fluctuating job market, effectively organizing and tracking your job applications can save you hours and reduce stress. 
 This application is designed to help users manage their job applications simply and efficiently.
 
-## Usecase Diagram
-![image](diagrams/usecase_diagram.png)
-## Sequence Diagrams
-![image](diagrams/browse_sequence_diagram.png)
-![image](diagrams/search_sequence_diagram.png)
-![image](diagrams/add_sequence_diagram.png)
-![image](diagrams/import_sequence_diagram.png)
-![image](diagrams/filter_sequence_diagram.png)
-![image](diagrams/edit_sequence_diagram.png)
-![image](diagrams/delete_sequence_diagram.png)
-
-
-## Class Diagram
-![image](diagrams/class_diagram.png)
-
 ## Instructions to run program
 
 ### Prerequisites
@@ -41,6 +26,21 @@ java JobTracker
 ```
 2. Follow any on-screen instructions to interact with the program.
 
+# UML diagrams for program
+## Usecase Diagram
+![image](diagrams/usecase_diagram.png)
+## Sequence Diagrams
+![image](diagrams/browse_sequence_diagram.png)
+![image](diagrams/search_sequence_diagram.png)
+![image](diagrams/add_sequence_diagram.png)
+![image](diagrams/import_sequence_diagram.png)
+![image](diagrams/filter_sequence_diagram.png)
+![image](diagrams/edit_sequence_diagram.png)
+![image](diagrams/delete_sequence_diagram.png)
+
+
+## Class Diagram
+![image](diagrams/class_diagram.png)
 
 ### Additional Tips
 - Ensure that all Java files (`*.java`) are in the same directory or properly reference each other if located in different packages or directories.
