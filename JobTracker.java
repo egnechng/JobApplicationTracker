@@ -1,10 +1,6 @@
-
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Scanner;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.text.ParseException;
 
 public class JobTracker {
 
@@ -24,7 +20,7 @@ public class JobTracker {
         //test job
         dm.addJob(new Job("OpenAI", "Developer", 120000, "San Francisco", new Date(), "Applied", "http://openai.com/jobs/dev"));
         dm.addJob(new Job("OpenAI", "Manager", 130000, "New York", new Date(), "Interviewed", "http://openai.com/jobs/mgr"));
-
+        wm.clear();
         System.out.println("Welcome to the Job Application Tracker!");
         /*
         try{
@@ -40,20 +36,20 @@ public class JobTracker {
         forever:
         while (true) {
 
-            String optionChosen = wm.showMainOptionsWindow();
+            String opt = wm.showMainOptionsWindow();
 
-            if (!validateOption(optionChosen , 5)) {
+            if (!validateOption(opt , 5)) {
                 wm.clear();
                 System.out.println("Not a valid option!");
                 continue;
             }
-            switch(Integer.parseInt(optionChosen)) {
+            switch(Integer.parseInt(opt)) {
                 case 1: {
                     // Display all my applications
                     ArrayList<Job> jobsList = dm.getJobs();
-                    String opt = wm.showBrowseJobsWindow(jobsList);
+                    opt = wm.showBrowseOptionsWindow(jobsList);
 
-                    if (!validateOption(optionChosen, 3)) {
+                    if (!validateOption(opt, 3)) {
                         wm.clear();
                         System.out.println("Not a valid option!");
                         continue;
@@ -62,7 +58,7 @@ public class JobTracker {
                         case 1: {
                             // Filter by Status
                             opt = wm.showFilterJobsWindow();
-                            if (!validateOption(optionChosen, 3)) {
+                            if (!validateOption(opt, 3)) {
                                 wm.clear();
                                 System.out.println("Not a valid option!");
                                 continue;
@@ -74,23 +70,90 @@ public class JobTracker {
                         } break;
 
                         case 2: {
+                            opt = wm.showEditJobWindow();
+                            if (!validateOption(opt, Job.getLastId())) {
+                                wm.clear();
+                                System.out.println("Not a valid option!");
+                                continue;
+                            }
+                            // return the Job with this ID
+                            Job jobToEdit = dm.getJobById(Integer.parseInt(opt));
+                            if (jobToEdit != null) {
+                                // open the menu to edit the jobs
+                                String[] editConfig = wm.showEditSelectionWindow(jobToEdit);
+                                // editConfig = [field to edit, new value]
+                                int field = Integer.parseInt(editConfig[0]);
+                                String newValue = editConfig[1];
+                                // check if flagged for delete
+                                if (field == 8) {
+                                    dm.deleteJob(jobToEdit);
+                                    System.out.println("Job Deleted!");
+                                } else {
+                                    // call dm to edit job
+                                    dm.editJob(jobToEdit, field, newValue);
+                                }
 
-                        }
+                            } else {
+                                System.out.println("This job does not exist!");
+                                continue;
+                            }
+                            wm.printJobsTable(dm.getJobs());
+
+
+                        } break;
 
                         default : {
-
+                            wm.clear();
                         }
                     }
-
-
-
-
                 }
                 break;
 
                 case 2: {
                     // Search for job application (Company name, role, location)
-                    System.out.println("Case 2");
+                    String searchKey = wm.showSearchJobWindow();
+
+                    // use dm to search for jobs that match this key
+                    ArrayList<Job> searchResults = dm.searchJobs(searchKey);
+                    wm.printJobsTable(searchResults);
+
+                    opt = wm.showPostSearchOptions();
+                    if (!validateOption(opt, 2)) {
+                        wm.clear();
+                        System.out.println("Not a valid option!");
+                        continue;
+                    }
+                    if (Integer.parseInt(opt) == 1) {
+                        // TODO: Maybe make this edit into a function since its used twice
+                        opt = wm.showEditJobWindow();
+                        if (!validateOption(opt, Job.getLastId())) {
+                            wm.clear();
+                            System.out.println("Not a valid option!");
+                            continue;
+                        }
+                        // return the Job with this ID
+                        Job jobToEdit = dm.getJobById(Integer.parseInt(opt));
+                        if (jobToEdit != null) {
+                            // open the menu to edit the jobs
+                            String[] editConfig = wm.showEditSelectionWindow(jobToEdit);
+                            // editConfig = [field to edit, new value]
+                            int field = Integer.parseInt(editConfig[0]);
+                            String newValue = editConfig[1];
+                            // check if flagged for delete
+                            if (field == 8) {
+                                dm.deleteJob(jobToEdit);
+                                System.out.println("Job Deleted!");
+                            } else {
+                                // call dm to edit job
+                                dm.editJob(jobToEdit, field, newValue);
+                            }
+
+                        } else {
+                            System.out.println("This job does not exist!");
+                            continue;
+                        }
+                        wm.printJobsTable(dm.getJobs());
+                    }
 
                 }
                 break;

@@ -72,23 +72,79 @@ public class DataManager {
         return jobs;
     }
 
-    /**
-     * Searches jobs based on the company, location, or role.
-     * @param query The search criterion.
-     * @param type The type of the filter: "company", "location", or "role".
-     * @return A list of jobs that match the query based on the specified type.
-     */
-    public ArrayList<Job> searchJobs(String query, String type) {
-        return jobs.stream()
-                .filter(job -> {
-                    return switch (type.toLowerCase()) {
-                        case "company" -> job.getCompany().equalsIgnoreCase(query);
-                        case "location" -> job.getLocation().equalsIgnoreCase(query);
-                        case "role" -> job.getRole().equalsIgnoreCase(query);
-                        default -> false; // if type does not match, return no jobs
-                    };
-                })
-                .collect(Collectors.toCollection(ArrayList::new));
+    public void deleteJob(Job job) {
+        int id = job.getId();
+        // delete job from the list
+        for (Job j : jobs) {
+            if (j.getId() == id) {
+                jobs.remove(j);
+                return;
+            }
+        }
+    }
+
+    public void editJob(Job job, int field, String newValue) {
+        // Assume that the valid values are passed through here
+        switch (field) {
+            case 1: // Company
+                job.setCompany(newValue);
+                break;
+            case 2: // Role
+                job.setRole(newValue);
+                break;
+            case 3: // Salary
+                double salary = Double.parseDouble(newValue);
+                job.setSalary(salary);
+                break;
+            case 4: // Location
+                job.setLocation(newValue);
+                break;
+            case 5: // Date Applied
+                SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+                try {
+                    Date date = dateFormat.parse(newValue);
+                    job.setDateApplied(date);
+                } catch (ParseException e) {
+                    System.out.println("Invalid date format. Please enter the date in MM/DD/YYYY format.");
+                }
+                break;
+            case 6: // Status
+                job.setStatus(newValue);
+                break;
+            case 7: // Link to Posting
+                job.setLinkToPosting(newValue);
+                break;
+            default:
+                System.out.println("Invalid option selected.");
+                break;
+
+        }
+    }
+
+    public ArrayList<Job> searchJobs(String query) {
+        ArrayList<Job> searchResults = new ArrayList<>();
+
+        for (Job job : jobs) {
+            // Check if the query is a substring of any of the specified fields
+            if (job.getCompany().toLowerCase().contains(query.toLowerCase()) ||
+                    job.getRole().toLowerCase().contains(query.toLowerCase()) ||
+                    job.getLocation().toLowerCase().contains(query.toLowerCase())) {
+                searchResults.add(job);
+            }
+        }
+
+        return searchResults;
+    }
+
+    public Job getJobById(int id) {
+
+        for (Job j : jobs) {
+            if (j.getId() == id) {
+                return j;
+            }
+        }
+
+        return null;
     }
 
     public ArrayList<Job> filterJobsByStatus(int option) {

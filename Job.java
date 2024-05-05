@@ -40,11 +40,11 @@ public class Job implements Serializable{
         this.id = ++lastIdUsed;
     }
 
-    public void setLastId(int value) {
+    public static void setLastId(int value) {
         lastIdUsed = value;
     }
 
-    public int getLastId() {
+    public static int getLastId() {
         return lastIdUsed;
     }
 
