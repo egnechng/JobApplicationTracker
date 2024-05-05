@@ -8,11 +8,19 @@ import java.text.ParseException;
 
 public class JobTracker {
 
-    public static void main(String[] args) {
+    // Singleton Design Pattern
+    private static JobTracker instance;
 
-        DataManager dm = DataManager.getInstance();
-        WindowManager wm = WindowManager.getInstance();
+    private JobTracker() {}
 
+    public static JobTracker getInstance() {
+        if (instance == null) {
+            instance = new JobTracker();
+        }
+        return instance;
+    }
+
+    public void runApp(DataManager dm, WindowManager wm) {
         //test job
         dm.addJob(new Job("OpenAI", "Developer", 120000, "San Francisco", new Date(), "Applied", "http://openai.com/jobs/dev"));
         dm.addJob(new Job("OpenAI", "Manager", 130000, "New York", new Date(), "Interview", "http://openai.com/jobs/mgr"));
@@ -93,12 +101,14 @@ public class JobTracker {
 
     }
 
-    public static String filterByStatus() {
-        return null;
+    public static void main(String[] args) {
+
+        DataManager dm = DataManager.getInstance();
+        WindowManager wm = WindowManager.getInstance();
+        JobTracker jt = JobTracker.getInstance();
+        jt.runApp(dm, wm); // Main App loop
+
     }
-
-
-
 
 }
 
