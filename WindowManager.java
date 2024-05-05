@@ -118,6 +118,7 @@ public class WindowManager {
         if (Integer.parseInt(field) == 5) {
             // Date
             System.out.print("Enter the new value (MM/DD/YYYY): ");
+            result[1] = scanner.nextLine();
         } else if (Integer.parseInt(field) != 8) {
             System.out.print("Enter the new value: ");
             result[1] = scanner.nextLine();
