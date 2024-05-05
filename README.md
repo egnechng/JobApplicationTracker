@@ -26,6 +26,13 @@ java JobTracker
 ```
 2. Follow any on-screen instructions to interact with the program.
 
+### Additional Tips
+- Ensure that all Java files (`*.java`) are in the same directory or properly reference each other if located in different packages or directories.
+- If your Java files are part of a package, the `cd` command should navigate to the root directory above the package structure, and you should include the package name when running the `java` command, like `java package_name.JobTracker`.
+- If there are any additional libraries or dependencies, ensure they are correctly referenced in your compile and run commands, typically with the `-cp` or `-classpath` option.
+
+
+
 # UML diagrams for program
 ## Usecase Diagram
 ![image](diagrams/usecase_diagram.png)
@@ -41,11 +48,6 @@ java JobTracker
 
 ## Class Diagram
 ![image](diagrams/class_diagram.png)
-
-### Additional Tips
-- Ensure that all Java files (`*.java`) are in the same directory or properly reference each other if located in different packages or directories.
-- If your Java files are part of a package, the `cd` command should navigate to the root directory above the package structure, and you should include the package name when running the `java` command, like `java package_name.JobTracker`.
-- If there are any additional libraries or dependencies, ensure they are correctly referenced in your compile and run commands, typically with the `-cp` or `-classpath` option.
 
 
 ## Team Members
