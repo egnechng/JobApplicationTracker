@@ -5,9 +5,18 @@ This application is designed to help users manage their job applications simply 
 
 ## Usecase Diagram
 ![image](diagrams/usecase_diagram.png)
-## Sequence Diagram
+## Sequence Diagrams
+![image](diagrams/browse_sequence_diagram.png)
+![image](diagrams/search_sequence_diagram.png)
+![image](diagrams/add_sequence_diagram.png)
+![image](diagrams/import_sequence_diagram.png)
+![image](diagrams/filter_sequence_diagram.png)
+![image](diagrams/edit_sequence_diagram.png)
+![image](diagrams/delete_sequence_diagram.png)
+
 
 ## Class Diagram
+![image](diagrams/class_diagram.png)
 
 ## Instructions to run program
 
