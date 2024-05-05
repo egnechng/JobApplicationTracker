@@ -55,7 +55,7 @@ public class DataManager {
             return true;
         }
         catch (IOException e){
-            System.out.println("Invalid date format within . Please enter the date in MM/DD/YYYY format.");
+            System.out.println("Error while reading the file " + filename);
             return false;
         }
         catch (ParseException e) {
@@ -92,6 +92,7 @@ public class DataManager {
     }
 
     public static void saveJob(Job j) {
+        // TODO: Save this into the bin file.
         System.out.println("Job Application Saved!");
     }
 

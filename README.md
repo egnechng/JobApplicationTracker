@@ -1,6 +1,7 @@
 # Job Application Tracker
 ## Description
-In today's fluctuating job market, effectively organizing and tracking your job applications can save you hours and reduce stress. This application is designed to help users manage their job applications simply and efficiently.
+In today's fluctuating job market, effectively organizing and tracking your job applications can save you hours and reduce stress. 
+This application is designed to help users manage their job applications simply and efficiently.
 
 ## Usecase Diagram
 
